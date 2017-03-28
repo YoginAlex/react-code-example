@@ -3,8 +3,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import { Header } from './components';
-import { Actions } from './components';
+import { Header, Actions } from './components';
 
 import './App.css';
 

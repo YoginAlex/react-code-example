@@ -1,7 +1,9 @@
 const ADD_NOTIFICATION = 'app/notifications/ADD_NOTIFICATION';
+const TOGGLE = 'app/notifications/TOGGLE';
 
 
 const initialState = {
+    isShown: false,
     notifications: [
         {
             id: 17,
@@ -50,6 +52,7 @@ const initialState = {
 
 
 export default function reducer(state = initialState,  action = {}) {
+    console.log('action', action);
     switch (action.type) {
         case ADD_NOTIFICATION: {
             const { title } = action;
@@ -72,6 +75,17 @@ export default function reducer(state = initialState,  action = {}) {
             };
         }
 
+        case TOGGLE: {
+            const isShown = action.flag !== undefined
+                ? action.flag
+                : !state.isShown;
+
+            return {
+                ...state,
+                isShown
+            };
+        }
+
         default:
             return state
     }
@@ -81,5 +95,12 @@ export function addNotification(title) {
     return {
         type: ADD_NOTIFICATION,
         title
+    }
+}
+
+export function toggle(flag) {
+    return {
+        type: TOGGLE,
+        flag
     }
 }

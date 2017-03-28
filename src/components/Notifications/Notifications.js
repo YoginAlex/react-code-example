@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 
 import moment from 'moment';
+
 import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
@@ -11,7 +12,7 @@ import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
-import { addNotification } from '../../store/notifications';
+import { addNotification, toggle } from '../../store/notifications';
 
 import './Notifications.css';
 
@@ -19,7 +20,7 @@ import './Notifications.css';
 class Notifications extends Component {
     static propTypes = {
         isShown: PropTypes.bool.isRequired,
-        toggleShow: PropTypes.func.isRequired,
+        toggle: PropTypes.func.isRequired,
 
         anchor: PropTypes.any,
         setAnchor: PropTypes.func.isRequired,
@@ -30,7 +31,7 @@ class Notifications extends Component {
 
     render() {
         const {
-            isShown, toggleShow,
+            isShown, toggle,
             anchor, setAnchor,
             notifications, addNotification
         } = this.props;
@@ -63,7 +64,7 @@ class Notifications extends Component {
                             e.preventDefault();
 
                             setAnchor(e.currentTarget);
-                            toggleShow(!isShown);
+                            toggle();
                         }}
                     >
                         <NotificationsIcon className="iconStyle" />
@@ -76,7 +77,7 @@ class Notifications extends Component {
                     anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                     targetOrigin={{ horizontal: 'left', vertical: 'top' }}
                     onRequestClose={() => {
-                        toggleShow(false);
+                        toggle(false);
                     }}
                     animation={PopoverAnimationVertical}
                 >
@@ -87,7 +88,7 @@ class Notifications extends Component {
                             onTouchTap={(e) => {
                                 e.preventDefault();
 
-                                toggleShow(!isShown);
+                                toggle();
                             }}
                         />
                     </Menu>
@@ -100,13 +101,14 @@ class Notifications extends Component {
 const decorate = compose(
     connect(
         state => ({
-            notifications: state.notifications.notifications
+            notifications: state.notifications.notifications,
+            isShown: state.notifications.isShown
         }),
         dispatch => bindActionCreators({
-            addNotification
+            addNotification, toggle
         }, dispatch)
     ),
-    withState('isShown', 'toggleShow', false),
+    // withState('isShown', 'toggleShow', false),
     withState('anchor', 'setAnchor', null)
 );
 
