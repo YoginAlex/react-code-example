@@ -1,3 +1,5 @@
 # React + Redux code demo
 
-Base env by `create-react-app`
+Demo page: [https://yoginalex.github.io/react-code-example/](https://yoginalex.github.io/react-code-example/)
+
+Base env by `create-react-app`.
