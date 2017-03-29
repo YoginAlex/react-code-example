@@ -1,0 +1,45 @@
+@keyframes fade-in {
+    from   { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes move-up {
+    from   { top: 50px; }
+    to { top: 70px; }
+}
+
+$color: lighten(#00bcd4, 50);
+
+.wrapper {
+    position: relative;
+}
+
+.popover {
+    background-color: $color;
+    border-radius: 5px;
+    top: 70px;
+    color: black;
+    display: none;
+    font-size: 12px;
+    font-family: 'Helvetica',sans-serif;
+    right: 20px;
+    padding: 1.5rem;
+    position: absolute;
+    width: 250px;
+    z-index: 4;
+
+    &:before {
+        border-bottom: 7px solid $color;
+        border-right: 7px solid transparent;
+        border-left: 7px solid transparent;
+        top: -7px;
+        content: '';
+        display: block;
+        right: 21px;
+        position: absolute;
+    }
+
+    &.active {
+        display: block;
+        animation: fade-in .3s linear 1, move-up .3s linear 1;
+    }
+}

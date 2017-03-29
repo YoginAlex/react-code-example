@@ -57,9 +57,9 @@ export default function reducer(state = initialState,  action = {}) {
         case ADD_NOTIFICATION: {
             const { title } = action;
 
-            const maxId = state.reduce(function (prev, current) {
-                return (prev.y > current.y) ? prev : current
-            }).id;
+            const maxId = state.reduce((prev, current) => (
+                (prev.y > current.y) ? prev : current
+            )).id;
 
             return {
                 ...state,
@@ -87,7 +87,7 @@ export default function reducer(state = initialState,  action = {}) {
         }
 
         default:
-            return state
+            return state;
     }
 }
 
@@ -95,12 +95,12 @@ export function addNotification(title) {
     return {
         type: ADD_NOTIFICATION,
         title
-    }
+    };
 }
 
 export function toggle(flag) {
     return {
         type: TOGGLE,
         flag
-    }
+    };
 }

@@ -1,19 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import { withState, compose } from 'recompose';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 import moment from 'moment';
 
 import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
-import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
+import { Popover } from '../../containers';
 
-import { addNotification, toggle } from '../../store/notifications';
+import { toggle } from '../../store/notifications';
 
 import './Notifications.css';
 
@@ -23,76 +20,70 @@ class Notifications extends Component {
         isShown: PropTypes.bool.isRequired,
         toggle: PropTypes.func.isRequired,
 
-        anchor: PropTypes.any,
         setAnchor: PropTypes.func.isRequired,
 
-        notifications: PropTypes.array.isRequired,
-        addNotification: PropTypes.func.isRequired
+        notifications: PropTypes.array.isRequired
     };
 
     render() {
         const {
-            isShown, toggle,
-            anchor, setAnchor,
-            notifications, addNotification
+            isShown, toggle: toggleAction,
+            setAnchor,
+            notifications
         } = this.props;
 
-        const menuItems = notifications.slice(0, 5).map((note, index) => {
+        const notifyItems = notifications.slice(0, 5).map((note, index) => {
             const relativeTime = moment(note.datetime).fromNow(true);
 
-            return <MenuItem
-                key={index}
-                primaryText={
-                    <div>
-                        {note.title}
-                        <div className="secondaryText">
-                            {relativeTime}
-                        </div>
-                    </div>
-                }
-            />
+            return (
+                <div
+                    className="notifyItem"
+                    key={index}
+                >
+                    {note.title}
+                    <p>
+                        {relativeTime}
+                    </p>
+                </div>
+            );
         });
+
+        notifyItems.push(
+            <div
+                className="notifyItem action"
+                key={notifyItems.length}
+                onClick={(e) => {
+                    e.preventDefault();
+
+                    toggleAction();
+                }}
+            >
+                ...show all
+            </div>
+        );
 
         return (
             <div>
-                <Badge
-                    badgeContent={notifications.length}
-                    secondary={true}
-                    badgeStyle={{ top: 20, right: 20 }}
-                >
-                    <IconButton
-                        onTouchTap={(e) => {
-                            e.preventDefault();
-
-                            setAnchor(e.currentTarget);
-                            toggle();
-                        }}
-                    >
-                        <NotificationsIcon className="iconStyle" />
-                    </IconButton>
-                </Badge>
-
                 <Popover
-                    open={isShown}
-                    anchorEl={anchor || ReactDOM.findDOMNode(this)}
-                    anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                    targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                    onRequestClose={() => {
-                        toggle(false);
-                    }}
-                    animation={PopoverAnimationVertical}
+                    isShown={isShown}
+                    popoverContent={notifyItems}
                 >
-                    <Menu>
-                        {menuItems}
-                        <MenuItem
-                            primaryText="...show all"
+                    <Badge
+                        badgeContent={notifications.length}
+                        secondary
+                        badgeStyle={{ top: 20, right: 20 }}
+                    >
+                        <IconButton
                             onTouchTap={(e) => {
                                 e.preventDefault();
 
-                                toggle();
+                                setAnchor(e.currentTarget);
+                                toggleAction();
                             }}
-                        />
-                    </Menu>
+                        >
+                            <NotificationsIcon className="iconStyle" />
+                        </IconButton>
+                    </Badge>
                 </Popover>
             </div>
         );
@@ -106,7 +97,7 @@ const decorate = compose(
             isShown: state.notifications.isShown
         }),
         dispatch => bindActionCreators({
-            addNotification, toggle
+            toggle
         }, dispatch)
     ),
     // withState('isShown', 'toggleShow', false),

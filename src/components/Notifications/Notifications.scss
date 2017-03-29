@@ -2,11 +2,27 @@
     color: white !important;
 }
 
-.secondaryText {
-    clear: both;
-    color: gray;
+.notifyItem {
+    color: black;
     display: block;
-    font-weight: 300;
-    font-size: 14px;
-    line-height: 28px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    padding-bottom: 10px;
+
+    & > p {
+        color: gray;
+        display: block;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 16px;
+    }
+
+    &.action {
+        cursor: pointer;
+
+        &:hover {
+            color: darken(gray, 40)
+        }
+    }
 }

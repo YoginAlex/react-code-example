@@ -11,8 +11,7 @@ module.exports = {
         "no-alert": 0,
         "no-trailing-spaces": 0,
         "no-unused-vars": 1,
-
-        "no-param-reassign": 0,
+        "comma-dangle": 0,
 
         "react/no-multi-comp": 0,
         "react/jsx-indent": 0,
@@ -23,7 +22,7 @@ module.exports = {
         "react/require-default-props": 0,
         "react/no-array-index-key": 0,
         "react/jsx-wrap-multilines": 0,
-
+        "jsx-a11y/no-static-element-interactions": 0,
         "import/default": 0,
         "import/no-duplicates": 0,
         "import/named": 0,
@@ -32,6 +31,13 @@ module.exports = {
         "import/extensions": 0,
         "import/no-extraneous-dependencies": 0,
         "import/no-named-as-default": 2
+    },
+    "parser": "babel-eslint",
+    "settings": {
+        "import/parser": "babel-eslint",
+        "import/resolve": {
+            "moduleDirectory": ["node_modules", "src"]
+        }
     },
     "globals": {
         "__DEVELOPMENT__": true,
@@ -43,6 +49,6 @@ module.exports = {
         "__ROOT_FOLDER__": true,
         "configuration": true,
         "socket": true,
-        "documents": true
+        "document": true
     }
 };
