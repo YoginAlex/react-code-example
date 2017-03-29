@@ -2,7 +2,7 @@
   "name": "react-example",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://YoginAlex.github.io/react-code-example",
+  "homepage": "http://yoginalex.github.io/react-code-example",
   "dependencies": {
     "material-ui": "^0.17.1",
     "moment": "^2.18.1",
