@@ -7,7 +7,7 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import { addNotification } from '../../store/notifications';
+import { addNotification, toggle } from '../../store/notifications';
 
 
 const style = {
@@ -18,12 +18,14 @@ const style = {
 
 class Actions extends Component {
     static propTypes = {
-        addNotification: PropTypes.func.isRequired
+        addNotification: PropTypes.func.isRequired,
+        toggle: PropTypes.func.isRequired
     };
 
     render() {
         const {
-            addNotification
+            addNotification,
+            toggle
         } = this.props;
 
         return (
@@ -42,7 +44,13 @@ class Actions extends Component {
                     <br/>
                     <RaisedButton label="Delete all Notifications" style={style.button} />
                     <br/>
-                    <RaisedButton label="Toggle" style={style.button} />
+                    <RaisedButton
+                        label="Toggle"
+                        style={style.button}
+                        onTouchTap={() => {
+                            toggle();
+                        }}
+                    />
                 </div>
             </div>
         );
@@ -53,7 +61,8 @@ const decorate = compose(
     connect(
         null,
         dispatch => bindActionCreators({
-            addNotification
+            addNotification,
+            toggle
         }, dispatch)
     )
 );

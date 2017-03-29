@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { withState, compose } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
@@ -73,7 +74,7 @@ class Notifications extends Component {
 
                 <Popover
                     open={isShown}
-                    anchorEl={anchor}
+                    anchorEl={anchor || ReactDOM.findDOMNode(this)}
                     anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                     targetOrigin={{ horizontal: 'left', vertical: 'top' }}
                     onRequestClose={() => {
