@@ -32,12 +32,12 @@ class Notifications extends Component {
             notifications
         } = this.props;
 
-        const notifyItems = notifications.slice(0, 5).map((note, index) => {
+        const notifyItems = notifications.slice(-5).map((note, index) => {
             const relativeTime = moment(note.datetime).fromNow(true);
 
             return (
                 <div
-                    className="notifyItem"
+                    className={`notifyItem${!note.unread ? ' isReaded' : ''}`}
                     key={index}
                 >
                     {note.title}

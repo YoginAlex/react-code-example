@@ -18,6 +18,10 @@
         line-height: 16px;
     }
 
+    &.isReaded {
+        color: lighten(black, 50);
+    }
+
     &.action {
         cursor: pointer;
 
